@@ -6,6 +6,7 @@ let me = null;
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDate = d => { if (!d) return ''; const x = new Date(d + 'T12:00:00'); return isNaN(x) ? esc(d) : x.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' }); };
+const fmtSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB';
 
 async function api(path, method = 'GET', body) {
   const opts = { method, credentials: 'same-origin', headers: {} };
@@ -171,7 +172,6 @@ async function viewProperty(id) {
       <td><select data-status="${a.id}" style="width:auto;padding:4px 6px">${STATUSES.map(s => `<option ${s === a.status ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
       ${isOwner ? `<td><button class="btn danger sm" data-deljob="${a.id}">Remove</button></td>` : ''}</tr>`).join('')}</table></div>`
     : '<div class="empty card">No subs scheduled on this property yet.</div>'}`);
-  const fmtSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB';
   document.getElementById('up_btn').onclick = async () => {
     const f = document.getElementById('up_file').files[0];
     if (!f) return toast('Choose a file first', true);
