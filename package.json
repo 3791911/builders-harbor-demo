@@ -1,0 +1,8 @@
+{
+  "name": "builders-harbor",
+  "version": "1.0.0",
+  "description": "Builders Harbor: private construction platform for builders",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=22" }
+}
